@@ -4,12 +4,12 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,90 +18,81 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.project.Service.MemberService;
-import com.project.Service.productService;
-import com.project.dto.AdminDTO;
 import com.project.dto.FileDTO;
 import com.project.dto.MemberDTO;
 import com.project.dto.ProductDTO;
+import com.project.service.MemberService;
+import com.project.service.ProductService;
 import com.project.vo.PagingVO;
+
 
 @Controller
 public class MainController {
 	private MemberService memberService;
-	private productService productservice;
-
-	public MainController(MemberService memberService, productService productservice) {
+	private ProductService productservice;
+	
+	public MainController(MemberService memberService) {
 		super();
 		this.memberService = memberService;
-		this.productservice = productservice;
 	}
-
+	
+	@RequestMapping("/tables.do")
+	public String tables() {
+		return "tables";
+	}
+	
 	@RequestMapping("/")
 	public String main(Model model) {
 		return "index";
 	}
-
 	@RequestMapping("/home-02.do")
 	public String home02(Model model) {
 		return "home-02";
 	}
-
 	@RequestMapping("/blog.do")
 	public String blog(Model model) {
 		return "blog";
 	}
-
 	@RequestMapping("/blog-detail.do")
 	public String blog_detail(Model model) {
 		return "blog-detail";
 	}
-
 	@RequestMapping("/about.do")
 	public String about(Model model) {
 		return "about";
 	}
-
 	@RequestMapping("/contact.do")
 	public String contact(Model model) {
 		return "contact";
 	}
-
 	@RequestMapping("/product.do")
 	public String product(Model model) {
 		return "product";
 	}
-
 	@RequestMapping("/product-detail.do")
 	public String product_detail(Model model) {
 		return "product-detail";
 	}
-
 	@RequestMapping("/shoping-cart.do")
 	public String shoping_cart(Model model) {
 		return "shoping-cart";
 	}
-
+	
 	/*
-	 * ---------------------------------------------황상혁-----------------------------
-	 * -----------
-	 */
-
-	/*
-	 * 로그인 페이지 진입
+	 * 로그인 페이지 이동
 	 */
 	@RequestMapping("/login-page.do")
 	public String login_page(Model model) {
 		return "login";
 	}
-
+	
 	/*
 	 * 로그인 기능
 	 */
 	@RequestMapping("login.do")
 	public String login(String id, String passwd, HttpSession session) {
 		MemberDTO dto = memberService.login(id, passwd);
-
+		
 		if (dto != null) {
 			session.setAttribute("login", true);
 			session.setAttribute("id", dto.getMemberId());
@@ -112,17 +103,17 @@ public class MainController {
 			return "login";
 		}
 	}
-
+	
 	/*
 	 * 로그아웃 기능
 	 */
 	@RequestMapping("logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
-
+		
 		return "redirect:/";
 	}
-
+	
 	/*
 	 * 회원 가입 페이지 이동
 	 */
@@ -139,149 +130,104 @@ public class MainController {
 		memberService.insertMember(dto);
 		return "redirect:/";
 	}
-
+	
 	/*
 	 * 마이 페이지 이동
 	 */
 	@RequestMapping("/my-account.do")
 	public String my_account_page() {
-		return "my-account";
+		return "member_my_account";
 	}
-
+	
 	/*
-	 * 마이 페이지 미리 표시할 회원정보 조회 기능
+	 * 마이 페이지 표시할 회원정보 조회 기능
 	 */
 	@RequestMapping("/my-account-info.do")
 	public void selectLoginMember(HttpServletResponse response, HttpSession session) throws IOException {
 		response.setContentType("text/html;charset=utf-8;");
-		String id = (String) session.getAttribute("id");
+		String id = (String)session.getAttribute("id");
 		JSONObject obj = null;
-
+		
 		MemberDTO dto = memberService.selectLoginMember(id);
-
-		obj = new JSONObject(dto);
-
+		
+		obj= new JSONObject(dto);
+		
 		response.getWriter().write(obj.toString());
 	}
-
+	
 	/*
-	 * 회원정보 수정 기능
+	 * 회원정보 수정 기능 
 	 */
 	@RequestMapping("/member-update.do")
-	public String updateMember(MemberDTO memberDto) {
-		// result = 회원 정보 수정 결과값
+	public String updateMember(MemberDTO memberDto){
 		int result = 0;
-
+		
 		result = memberService.updateMember(memberDto);
-
+		
 		return String.valueOf(result);
 	}
-
+	
 	/*
-	 * 관리자 페이지 이동
+	 * 관리자 페이지 이동 
 	 */
 	@RequestMapping("/manager.do")
 	public String manager_page(Model model) {
 		return "manager";
 	}
-
+	
 	/*
 	 * 관리자 로그인 기능
 	 */
 	@RequestMapping("/manager-login.do")
-	public String manager_login(String managerNo, String managerName, HttpSession session) {
-		AdminDTO dto = memberService.managerLogin(managerNo, managerName);
-
-		System.out.println(dto);
-		if (dto != null) {
+	public String manager_login(String managerId, String pw, HttpSession session) {
+		String id = memberService.managerLogin(managerId,pw);
+		
+		System.out.println(id);
+		if (id != null) {
 			session.setAttribute("mLogin", true);
-			session.setAttribute("managerNo", dto.getManagerNo());
-			session.setAttribute("managerName", dto.getManagerName());
-			System.out.println("관리자 로그인 완료");
+			session.setAttribute("managerId", id);
+			return "redirect:/member-list.do";
 		} else {
 			session.setAttribute("mLogin", false);
+			return "redirect:/manager.do";
 		}
-
-		return "redirect:/manager.do";
-
+		
 	}
-
+	
 	/*
 	 * 관리자 로그아웃
 	 */
 	@RequestMapping("/manager-logout.do")
 	public String manager_logout(HttpSession session) {
 		session.invalidate();
-
+		
 		return "redirect:/manager.do";
 	}
-
+	
 	/*
-	 * 관리자 회원가입 이동
+	 * 등록된 회원 목록 조회 페이지 이동
 	 */
-	@RequestMapping("/manager-register-page.do")
-	public String manager_register_page() {
-
-		return "manager-register";
-	}
-
-	/*
-	 * 관리자 회원 관리 이동
-	 */
-	@RequestMapping("/manager-member-page.do")
+	@RequestMapping("/manager-member.do")
 	public String manager_member_page() {
-
-		return "manager-member";
+		
+		return "manager_member";
 	}
-
-	/*
-	 * 관리자 회원 등록
-	 */
-	@RequestMapping("/manager-register.do")
-	public String insertManager(String managerNo, String managerName) {
-		int result = 0;
-		result = memberService.insertManager(managerNo, managerName);
-
-		if (result != 0) {
-			System.out.println("관리자가 등록 되었습니다.");
-		} else {
-			System.out.println("관리자 등록에 실패하였습니다.");
-		}
-		return "redirect:/manager.do";
-	}
-
+	
 	/*
 	 * 등록된 모든 회원 정보 조회
 	 */
 	@RequestMapping("/member-list.do")
-	public String selectAllMember(@RequestParam(name = "pageNo", defaultValue = "1") int pageNo, Model model) {
+	public String selectAllMember(@RequestParam(name="pageNo",defaultValue="1") int pageNo, Model model) {
 		List<MemberDTO> list = memberService.selectMemberList(pageNo);
-		model.addAttribute("member", list);
-
+		model.addAttribute("member",list);
+		
 		int count = memberService.selectMemberCount();
 		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
-		model.addAttribute("paging", vo);
-
-		return "manager-member";
+		model.addAttribute("paging",vo);
+		
+		return "manager_member";
 	}
-
-	/*
-	 * 회원 목록 검색
-	 */
-	@RequestMapping("/member-search.do")
-	public String selectSearchMember(String search, String type, Model model, HttpServletResponse response)
-			throws IOException {
-		int pageNo = 1;
-		List<MemberDTO> list = memberService.selectSearchMember(search, type, pageNo);
-		model.addAttribute("member", list);
-
-		int count = memberService.selectMemberCount();
-		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
-		model.addAttribute("paging", vo);
-
-		return "manager-member";
-	}
-
+	
 	/*
 	 * 등록된 회원 주문 정보 및 상세 정보 조회
 	 */
@@ -289,37 +235,59 @@ public class MainController {
 	public String selectMemberInfo(String memberId, Model model) {
 		List<ProductDTO> list = memberService.selectAllProduct(memberId);
 		MemberDTO dto = memberService.selectLoginMember(memberId);
-
-		if (list.isEmpty()) {
-			model.addAttribute("message", "주문한 상품 정보가 없습니다.");
-		} else {
-			model.addAttribute("member", dto);
-			model.addAttribute("list", list);
+		
+		if(list.isEmpty()) {
+			model.addAttribute("message","주문한 상품 정보가 없습니다.");
+		}else {
+			model.addAttribute("member",dto);
+			model.addAttribute("list",list);
 		}
-
-		return "manager-member-detail";
+		
+		return "manager_member_detail";
 	}
-
+	
 	/*
 	 * 전체 주문 내역 조회
 	 */
 	@RequestMapping("/member-order-list.do")
-	public String selectProductList(@RequestParam(name = "pageNo", defaultValue = "1") int pageNo, Model model) {
+	public String selectProductList(@RequestParam(name="pageNo",defaultValue="1") int pageNo, Model model) {
 		List<MemberDTO> list = memberService.selectMemberOrderList(pageNo);
-		model.addAttribute("product", list);
-
+		model.addAttribute("product",list);
+		
 		int count = memberService.selectMemberOrderCount();
 		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
-		model.addAttribute("paging", vo);
-
-		return "manager-member-product";
+		model.addAttribute("paging",vo);
+		
+		return "manager_member_product";
 	}
-
+	
 	/*
-	 * ---------------------------------------------황상혁-----------------------------
-	 * -----------
+	 * 멤버 주문 목록 페이지 이동
 	 */
-
+	@RequestMapping("/member-login-order.do")
+	public String selectLoginMemberOrderList(Model model, HttpSession session) {
+		int pageNo= 1;
+		String id = (String)session.getAttribute("id");
+		
+		List<HashMap<String, Object>> list = memberService.selectLoginMemberOrderList(pageNo, id);
+		model.addAttribute("product",list);
+		
+		int count = memberService.selectMemberOrderCount();
+		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
+		model.addAttribute("paging",vo);
+		
+		return "member-order-list";
+	}
+	
+	/*
+	 * 상품 등록 페이지 이동 
+	 */
+	@RequestMapping("/manager-product-list.do")
+	public String manager_product_register() {
+		
+		return "manager_productList";
+	}
+	
 	/*-----------------------------------------------박홍희----------------------------------------*/
 
 	@RequestMapping("/manager_productList.do")
@@ -407,4 +375,5 @@ public class MainController {
 	}
 	/*-----------------------------------------------박홍희----------------------------------------*/
 
+	
 }

@@ -1,4 +1,4 @@
-package com.project.Service;
+package com.project.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +11,11 @@ import com.project.dto.ProductDTO;
 import com.project.mapper.ProductMapper;
 
 @Service
-public class productService {
+public class ProductService {
 
 	private ProductMapper mapper;
 
-	public productService(ProductMapper mapper) {
+	public ProductService(ProductMapper mapper) {
 		this.mapper = mapper;
 	}
 
@@ -34,7 +34,7 @@ public class productService {
 
 	public String insertproduct(ProductDTO productdto) {
 		String productcode = mapper.selectProductNO();
-		productdto.setProductno(productcode);
+		productdto.setProductNo(productcode);
 		mapper.insertProduct(productdto);
 		System.out.println("Adfbadfbadfb");
 		return productcode;
