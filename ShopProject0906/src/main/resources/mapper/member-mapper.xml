@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.MemberMapper">
+	<select id="login" parameterType="map" resultType="member">
+		select memberId, pw, memberName, address, to_char(birthDate,'MM/DD/YYYY') as birthDate, memberTelNo,
+		withdraw, gender  
+		from member where memberId = #{id} and pw = #{passwd}
+	</select>
+	<select id="admin_login" parameterType="map" resultType="admin">
+		select managerNo, managerName
+		from manager
+		where managerNo = #{managerNo} and managerName = #{managerName}
+	</select>
+	<insert id="admin_register" parameterType="map">
+		insert into manager
+		values(#{managerNo},#{managerName})
+	</insert>
+	<select id="selectAllMember" resultType="member">
+		select  memberId, memberName, address, to_char(birthDate,'YYYY/MM/DD') as birthDate,
+		memberTelNo, gender
+		from member
+	</select>
+	<insert id="insertMember" parameterType="member">
+		insert into member(memberId,pw)
+		values(#{memberId},#{pw})
+	</insert>
+	<select id="selectLoginMember" parameterType="String" resultType="member">
+		select memberId, memberName, address, to_char(birthDate,'YYYY/MM/DD') as birthDate,
+		memberTelNo, gender
+		from member
+		where memberId = #{memberId}
+	</select>
+	<select id="selectMemberCount" resultType="int">
+		select count(*) from member
+	</select>
+	<select id="selectMemberList" resultType="member" parameterType="int">
+		select * 
+		from (
+		select ceil(rownum / 15) as pageNo,
+		memberId, memberName, address, to_char(birthDate,'YYYY/MM/DD') as birthDate
+		,memberTelNo, gender, withdraw 
+		from member)
+		where pageNo = #{pageNo}
+	</select>
+	<select id="selectSearchMember" parameterType="map" resultType="member">
+		select * 
+		from (
+		select ceil(rownum / 15) as pageNo,
+		memberId, memberName, address, to_char(birthDate,'YYYY/MM/DD') as birthDate
+		,memberTelNo, gender, withdraw 
+		from member
+		where
+		${type} like '%' || #{search} || '%'
+		)
+		where pageNo = #{pageNo}
+	</select>
+	<select id="selectMemberOrderCount" resultType="int">
+		select count(*) from memberorder
+	</select>
+	<select id="selectMemberOrderList" parameterType="int" resultType="memberOrder">
+		select * 
+		from (
+		select ceil(rownum / 15) as pageNo,
+		mo.*
+		from memberorder mo)
+		where pageNo = #{pageNo}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
