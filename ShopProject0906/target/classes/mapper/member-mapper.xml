@@ -8,10 +8,10 @@
 		withdraw, gender  
 		from member where memberId = #{id} and pw = #{passwd}
 	</select>
-	<select id="admin_login" parameterType="map" resultType="admin">
-		select managerNo, managerName
+	<select id="managerLogin" parameterType="map" resultType="String">
+		select managerId
 		from manager
-		where managerNo = #{managerNo} and managerName = #{managerName}
+		where managerId = #{managerId} and pw = #{pw}
 	</select>
 	<insert id="admin_register" parameterType="map">
 		insert into manager
@@ -67,7 +67,28 @@
 		from memberorder mo)
 		where pageNo = #{pageNo}
 	</select>
-	
+	<select id="selectSearchMemberOrder" parameterType="map" resultType="memberOrder">
+		select * 
+		from (
+		select ceil(rownum / 15) as pageNo,
+		mo.*
+		from memberorder mo
+		where
+		${type} like '%' || #{search} || '%'
+		)
+		where pageNo = #{pageNo}
+	</select>
+	<select id="selectLoginMemberOrderList" parameterType="map" resultType="map">
+		select * 
+		from (
+		select ceil(rownum / 15) as pageNo,
+		mo.*
+		from memberorder mo
+		where 
+		memberId = #{memberId}
+		)
+		where pageNo = #{pageNo}
+	</select>
 </mapper>
 
 

@@ -24,11 +24,7 @@
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-	$(function(){
-	});
-</script>
+
 </head>
 
 <body id="page-top">
@@ -49,7 +45,7 @@
 					<i class="fas fa-laugh-wink"></i>
 				</div>
 				<div class="sidebar-brand-text mx-3">
-					shopproject manager <sup>ver0.1</sup>
+					SB Admin <sup>2</sup>
 				</div>
 			</a>
 
@@ -57,33 +53,33 @@
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<!-- <li class="nav-item"><a class="nav-link" href="index.html">
+			<li class="nav-item"><a class="nav-link" href="index.html">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span>
-			</a></li> -->
+			</a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
 			<!-- Heading -->
-			<div class="sidebar-heading">상품</div>
+			<div class="sidebar-heading">Interface</div>
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseTwo"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>상품 관리</span>
+					class="fas fa-fw fa-cog"></i> <span>Components</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">상품 관리:</h6>
-						<a class="collapse-item" href="buttons.html">상품 등록</a> <a
-							class="collapse-item" href="cards.html">상품 관리</a>
+						<h6 class="collapse-header">Custom Components:</h6>
+						<a class="collapse-item" href="buttons.html">Buttons</a> <a
+							class="collapse-item" href="cards.html">Cards</a>
 					</div>
 				</div></li>
 
 			<!-- Nav Item - Utilities Collapse Menu -->
-		<!-- 	<li class="nav-item"><a class="nav-link collapsed" href="#"
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
 				aria-expanded="true" aria-controls="collapseUtilities"> <i
 					class="fas fa-fw fa-wrench"></i> <span>Utilities</span>
@@ -97,44 +93,7 @@
 							class="collapse-item" href="utilities-animation.html">Animations</a>
 						<a class="collapse-item" href="utilities-other.html">Other</a>
 					</div>
-				</div></li> -->
-
-			<!-- Divider -->
-			<hr class="sidebar-divider">
-
-			<!-- Heading -->
-			<div class="sidebar-heading">Addons</div>
-
-			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item active"><a class="nav-link" href="#"
-				data-toggle="collapse" data-target="#collapsePages"
-				aria-expanded="true" aria-controls="collapsePages"> <i
-					class="fas fa-fw fa-folder"></i> <span>회원 관리</span>
-			</a>
-				<div id="collapsePages" class="collapse show"
-					aria-labelledby="headingPages" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Login Screens:</h6>
-						<a class="collapse-item" href="manager.do">Login</a> <a
-							class="collapse-item" href="manager-register-page.do">Register</a>
-						<a class="collapse-item" href="member-list.do">회원 목록</a>
-						<a class="collapse-item" href="member-order-list.do">주문 내역 확인</a>
-						<!-- <div class="collapse-divider"></div>
-						<h6 class="collapse-header">Other Pages:</h6>
-						<a class="collapse-item" href="404.html">404 Page</a> <a
-							class="collapse-item active" href="blank.html">Blank Page</a> -->
-					</div>
 				</div></li>
-
-			<!-- Nav Item - Charts -->
-			<!-- <li class="nav-item"><a class="nav-link" href="charts.html">
-					<i class="fas fa-fw fa-chart-area"></i> <span>Charts</span>
-			</a></li>
-
-			Nav Item - Tables
-			<li class="nav-item"><a class="nav-link" href="tables.html">
-					<i class="fas fa-fw fa-table"></i> <span>Tables</span>
-			</a></li> -->
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -152,14 +111,13 @@
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Login Screens:</h6>
-						<a class="collapse-item" href="manager.do">Login</a> <a
-							class="collapse-item" href="manager-register-page.do">Register</a>
+						<a class="collapse-item" href="manager.do">Login</a>  
 						<a class="collapse-item" href="member-list.do">회원 목록</a>
 						<a class="collapse-item" href="member-order-list.do">주문 내역 확인</a>
 						<div class="collapse-divider"></div>
-						<h6 class="collapse-header">Other Pages:</h6>
-						<a class="collapse-item" href="404.html">404 Page</a> <a
-							class="collapse-item active" href="blank.html">Blank Page</a>
+						<h6 class="collapse-header">상품 관리 :</h6>
+						<a class="collapse-item" href="404.html">상품 등록</a> <a
+							class="collapse-item active" href="blank.html">재고 관리</a>
 					</div>
 				</div></li>
 
@@ -247,7 +205,7 @@
 						<!-- ---------------------------------------------- -->
 						<c:choose>
 							<c:when test="${ sessionScope.manager_no != null}">
-								<jsp:include page="template/manager/menu-top-icon.jsp"></jsp:include>
+								<jsp:include page="../manager/menu-top-icon.jsp"></jsp:include>
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>
@@ -260,80 +218,44 @@
 
 				</nav>
 				<!-- End of Topbar -->
-				
-				<!-- ------------------ -->
-				<!-- ---페이지 내용 시작--- -->
-				<!-- ------------------ -->
-				
-				<div class="container-fluid">
-					<div class="col-lg-12 col-md-12 account_div">
-						<div class="table-responsive member-table">
-	   						<table class="table">
-		   						<thead>
-	                               <tr>
-	                                   <th>회원 아이디</th>
-	                                   <th>이름</th>
-	                                   <th>주소</th>
-	                                   <th>생년월일</th>
-	                                   <th>전화번호</th>
-	                                   <th>탈퇴여부</th>
-	                                   <th>성별</th>
-	                               </tr>
-	                               <tbody>
-	                               	   <tr>
-	                               	   	  <td>${requestScope.member.memberId }</td>
-	                               	   	  <td>${requestScope.member.memberName }</td>
-	                               	   	  <td>${requestScope.member.address }</td>
-	                               	   	  <td>${requestScope.member.birthDate }</td>
-	                               	   	  <td>${requestScope.member.memberTelNo }</td>
-	                               	   	  <td>${requestScope.member.withdraw }</td>
-	                               	   	  <td>${requestScope.member.gender }</td>
-	                               	   </tr>
-	                               	   <tr>
-	                               	   	  <td>제품번호</td>
-	                               	   	  <td>제품명</td>
-	                               	   	  <td></td>
-	                               	   </tr>
-	                               	   <c:forEach var="list" items="${requestScope.list }">
-	                               	   	  <tr>
-	                               	   	  	<td>${list. }</td>
-	                               	   	  </tr>
-	                               	   </c:forEach>
-	                               </tbody>
-	                            </thead>
-							</table>
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid center-block">
+					<div class="col-lg-6 col-md-6 account_div row align-items-center" style="float: none; margin:100 auto;">
+						<div class="account_form">
+							<h2>관리자 로그인</h2>
+							<c:choose>
+								<c:when test="${sessionScope.m_login }">
+									<p>${sessionScope.manager_name }님 로그인 되었습니다.</p>
+									<a href="manager-logout.do">로그아웃</a>
+								</c:when>
+								<c:otherwise>
+									<form method="post" action="manager-login.do">
+										<p>
+											<label>관리자 번호</label><input type="text"
+												name="managerNo">
+										</p>
+										<p>
+											<label>관리자 이름</label><input type="text"
+												name="managerName">
+										</p>
+										<div class="login_submit">
+											<button type="submit">login</button>
+											<button type="submit">
+												<a href="manager-register-page.do">register</a>
+											</button>
+										</div>
+									</form>
+								</c:otherwise>
+							</c:choose>
+
 						</div>
 					</div>
 				</div>
-				
-				<div class="container-fluid">
-					<div class="col-lg-12 col-md-12 account_div">
-						<div class="table-responsive member-table">
-	   						<table class="table">
-		   						<thead>
-	                               <tr>
-	                                   <th>회원 아이디</th>
-	                               </tr>
-	                               <tbody>
-	                               	   <c:forEach var="list" items="${requestScope.list }">
-	                               	   	  <tr>
-	                               	   	  	<td>${list. }</td>
-	                               	   	  </tr>
-	                               	   </c:forEach>
-	                               </tbody>
-	                            </thead>
-							</table>
-						</div>
-					</div>
-				</div>
-				
-				<!-- ------------------ -->
-				<!-- ---페이지 내용 끝---- -->
-				<!-- ------------------ -->
-				
 				<!-- /.container-fluid -->
 
 			</div>
+			<!-- End of Main Content -->
 
 			<!-- Footer -->
 			<footer class="sticky-footer bg-white">

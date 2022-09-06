@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html class="no-js" lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html class="no-js" lang="ko">
+
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Braga - login</title>
+<title>Braga - my account</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- Favicon -->
 <!-- CSS ========================= -->
 <!--bootstrap min css-->
@@ -36,8 +35,52 @@
 <!-- Main Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <!--modernizr min js here-->
+<style>
+.radio_box {
+	padding: 0 5px;
+	padding-bottom: 7px;
+}
+
+.member_info_btn {
+	width: 80px;
+	text-align: center;
+	border-radius: 3px;
+	display: inline-block;
+	margin: 0 3px;
+}
+
+.input_id {
+	padding: 6px 20px;
+	border: 1px solid #ddd;
+}
+</style>
 <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			url : 'my-account-info.do',
+			type : 'post',
+			dataType : 'json',
+			success : function(r) {
+				console.log(r);
+				$('.input_id').html(r.memberId);
+				$('.input_memberName').val(r.memberName);
+				$('.input_address').val(r.address);
+				$('.input_birthDate').val(r.birthDate);
+				$('.input_memberTelNo').val(r.memberTelNo);
+				if (r.gender == 'M') {
+					$('.input_gender_M').attr('checked', true);
+				} else {
+					$('.input_gender_F').attr('checked', true);
+				}
+			}
+		});
+	});
+</script>
 </head>
+
 <body>
 
 	<!--header area start-->
@@ -50,10 +93,10 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="breadcrumb_content">
-						<h3>register</h3>
+						<h3>My account</h3>
 						<ul>
-							<li><a href="index.html">home</a></li>
-							<li>Login</li>
+							<li><a href="/">home</a></li>
+							<li>My account</li>
 						</ul>
 					</div>
 				</div>
@@ -61,107 +104,68 @@
 		</div>
 	</div>
 	<!--breadcrumbs area end-->
-	<!-- customer login start -->
-	<div class="customer_login">
+	<!-- my account start -->
+	<section class="main_content_area">
 		<div class="container">
-			<div class="row">
-				<!--register area start-->
-				<div class="col-lg-6 col-md-6">
-					<div class="account_form register">
-						<script>
-						 var id_chk_flag = false ;
-						$(function(){
-							$('.registerfrom').submit(function(r){
-				                 if($('.id_null').val().length==0){
-			                    	r.preventDefault();
-			                    }else if($('.pw_null').val().length==0){
-			                    	r.preventDefault();
-			                    }else if($('.name_null').val().length==0){
-			                    	r.preventDefault();
-			                    }else if($('.address_null').val().length==0){
-			                    	r.preventDefault();
-			                    }else if($('.birthDate_null').val().length==0){
-			                    	r.preventDefault();
-			                    }else if($('.tel_null').val().length==0){
-			                    	r.preventDefault();
-			                    }else if($('.gender_null').val().length==0){
-			                    	r.prevenDefault();
-			                    }
-				            });
-							$('.register_id_chk_btn').click(function(){
-				                var d = 'memberId='+$('.id_chk').val();
-				                $.ajax({
-				                    url : 'idCheck.do',
-				                    data : d,
-				                    success : function(r){
-				                        if(r==1){
-				                            id_chk_flag = true;
-				                            var id_p = $('.id_ckp');
-				                            id_p.css('color','blue');
-				                            id_p.html('아이디가 사용 가능 합니다.');
-				                        } else {
-				                            id_chk_flag = false;
-				                            var id_p = $('.id_ckp');
-				                            id_p.css('color','red');
-				                            id_p.html('아이디가 중복됩니다.');
-				                            
-				                        }
-				                    }
-				                });
-				            });
-						});
-						
-						</script>
-
-						<h2>Register</h2>
-						<form action="register.do" class="registerfrom">
-							<p>
-								<label>Email address <span>*</span></label><input type="text"
-									name="memberId" class="id_chk id_null">
-								<button class="register_id_chk_btn" type="button">아이디
-									중복확인</button>
-							</p>
-
-							<p class="id_ckp"></p>
-							<p>
-								<label>Passwords <span>*</span></label><input type="password"
-									name="pw" class="pw_null">
-							</p>
-							<p>
-								<label>name <span>*</span></label><input type="text"
-									name="memberName" class="name_null">
-							</p>
-							<p>
-								<label>address <span>*</span></label><input type="text"
-									name="address" class="address_null">
-							</p>
-							<p>
-								<label>birthdate <span>*</span></label><input type="date"
-									name="birthDate" class="birthDate_null">
-							</p>
-							<p>
-								<label>MEMBERTELNO <span>*</span></label><input type="tel"
-									name="memberTelNo" class="tel_null">
-							</p>
-
-							<p>
-								<label>gender <span>*</span></label><select name="gender"
-									class="gender_null">
-									<option value="M">남</option>
-									<option value="F">여</option>
-								</select>
-							</p>
-							<div class="login_submit">
-								<button type="submit">Register</button>
+			<div class="account_dashboard">
+				<div class="row">
+					<div class="col-sm-12 col-md-3 col-lg-3">
+						<!-- Nav tabs -->
+						<div class="dashboard_tab_button">
+							<ul role="tablist" class="nav flex-column dashboard-list">
+								<li><a href="my-account.do" class="nav-link active">회원정보수정</a></li>
+								<li><a href="#qna" data-toggle="tab" class="nav-link">QNA</a></li>
+								<li><a href="#event" data-toggle="tab" class="nav-link">쿠폰함</a></li>
+								<li><a href="#chatting" data-toggle="tab" class="nav-link">1:1 채팅</a></li>
+								<li><a href="logout.do" class="nav-link">Logout</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-9 col-lg-9">
+						<!-- Tab panes -->
+						<div class="tab-content dashboard_content">
+							<div class="tab-pane fade show active" id="member-info">
+								<h3>회원정보수정</h3>
+								<div class="login">
+									<div class="login_form_container">
+										<div class="account_login_form">
+											<form action="member-mod.do">
+												<br>
+												<label>아이디</label>
+												<p class="input_id"></p>
+												<label>비밀번호</label><input type="password" name="pw"><label>이름</label><input
+													type="text" class="input_memberName" name="memberName"><label>주소</label><input
+													type="text" class="input_address" name="address"><label>생년월일</label><input
+													type="text" class="input_birthDate"
+													placeholder="MM/DD/YYYY" name="birthDate"><label>전화번호</label><input
+													type="text" class="input_memberTelNo"
+													placeholder="010-0000-0000" name="memberTelNo"> <br>
+												<div class="input-radio radio_box">
+													<span class="custom-radio"><input type="radio"
+														class="input_gender_M" value="M" name="gender">남</span><span
+														class="custom-radio"><input type="radio"
+														class="input_gender_F" value="F" name="gender">여</span>
+												</div>
+												<div
+													class="save_button primary_btn default_button member_info_btn">
+													<button type="submit">수정하기</button>
+												</div>
+												<div
+													class="save_button primary_btn default_button member_info_btn">
+													<button type="reset">초기화</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
-				<!--register area end-->
 			</div>
 		</div>
-	</div>
-	<!-- customer login end -->
+	</section>
+	<!-- my account end -->
 	<!--footer area start-->
 	<footer class="footer_widgets footer_padding">
 		<div class="container">
@@ -221,12 +225,11 @@
 					<div class="col-lg-6 col-md-7">
 						<div class="footer_bottom_left">
 							<div class="footer_logo">
-								<a href="index.html"><img src="assets/img/logo/logo2.png"
-									alt=""></a>
+								<a href="/"><img src="assets/img/logo/logo2.png" alt=""></a>
 							</div>
 							<div class="copyright_area">
 								<p>
-									Copyright ?2020 <a href="index.html">Braga</a>. <a
+									Copyright © 2020 <a href="/">Braga</a>. <a
 										href="http://www.bootstrapmb.com/" target="_blank">All
 										rights reserved.</a>
 								</p>
@@ -269,4 +272,5 @@
 	<!-- Main JS -->
 	<script src="assets/js/main.js"></script>
 </body>
+
 </html>

@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
 
     <meta charset="utf-8">
@@ -11,22 +13,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Manager - 회원 관리</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
 <body id="page-top">
 	<!-- Sidebar variable -->
-	<c:set var="active" value="0" scope="page"/>
+	<c:set var="active" value="1" scope="page"/>
 	
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -34,7 +39,7 @@
 		<!-- Sidebar -->
 		<jsp:include page="template/manager/sidebar.jsp"></jsp:include>
         <!-- End of Sidebar -->
-        
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -45,9 +50,11 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
                     <!-- Topbar Search -->
                     <form
@@ -213,7 +220,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.name }</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -247,7 +254,56 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                 <jsp:include page="template/manager/select_product_list.jsp" flush="false"></jsp:include> 
+
+                    <!-- Page Heading -->
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">회원 목록</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                           <th>회원 아이디</th>
+                                           <th>이름</th>
+		                                   <th>주소</th>
+		                                   <th>생년월일</th>
+		                                   <th>전화번호</th>
+		                                   <th>탈퇴여부</th>
+		                                   <th>성별</th>
+		                                   <th>자세히</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+	                                    <c:forEach var="m" items="${requestScope.member }">
+	                               	   		<tr>
+			                               		<td>${m.memberId }</td>
+			                               		<td>${m.memberName }</td>
+			                               		<td>${m.address }</td>
+			                               		<td>${m.birthDate }</td>
+			                               		<td>${m.memberTelNo }</td>
+			                               		<td>
+			                               			<c:choose>
+				                               			<c:when test="${m.withdraw == 1 }">
+				                               				Y
+				                               			</c:when>
+				                               			<c:otherwise>
+				                               				N
+				                               			</c:otherwise>
+				                               		</c:choose>
+			                               		</td>
+			                               		<td>${m.gender }</td>
+			                               		<td><a href="member-search-product.do?search=${m.memberId }&type=memberId">주문내역</a></td>
+		                               		</tr>   	  
+	                               	   </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -304,6 +360,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
