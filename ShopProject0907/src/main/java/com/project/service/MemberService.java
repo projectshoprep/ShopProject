@@ -137,6 +137,28 @@ public class MemberService {
 		return memberMapper.selectLoginMemberOrderList(map);
 	}
 
+	public List<MemberDTO> selectSearchMemberProduct(String search, String type, int pageNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search",search);
+		map.put("type", type);
+		map.put("pageNo", pageNo);
+		return memberMapper.selectSearchMemberProduct(map);
+	}
+
+	public int selectSearchMemberCount(String search, String type) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("type", type);
+		return memberMapper.selectSearchMemberCount(map);
+	}
+
+	public int selectSearchMemberOrderCount(String search, String type) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("type", type);
+		return memberMapper.selectSearchMemberOrderCount(map);
+	}
+
 	
 
 	

@@ -29,5 +29,8 @@ public interface MemberMapper {
 	List<MemberDTO> selectMemberOrderList(int pageNo);
 	List<MemberDTO> selectSearchMemberOrder(Map<String, Object> map);
 	List<HashMap<String, Object>> selectLoginMemberOrderList(Map<String, Object> map);
+	List<MemberDTO> selectSearchMemberProduct(Map<String, Object> map);
+	int selectSearchMemberCount(Map<String, Object> map);
+	int selectSearchMemberOrderCount(Map<String, Object> map);
 	
 }

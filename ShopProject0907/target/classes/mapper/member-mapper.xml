@@ -53,8 +53,15 @@
 		from member
 		where
 		${type} like '%' || #{search} || '%'
-		)
-		where pageNo = #{pageNo}
+		) 
+		where
+		pageNo = #{pageNo}
+	</select>
+	<select id="selectSearchMemberCount" parameterType="map" resultType="int">
+		select count(*)
+		from member
+		where
+		${type} like '%' || #{search} || '%'
 	</select>
 	<select id="selectMemberOrderCount" resultType="int">
 		select count(*) from memberorder
@@ -88,6 +95,12 @@
 		memberId = #{memberId}
 		)
 		where pageNo = #{pageNo}
+	</select>
+	<select id="selectSearchMemberOrderCount" resultType="int">
+		select count(*)
+		from memberorder
+		where
+		${type} like '%' || #{search} || '%'
 	</select>
 	
 </mapper>

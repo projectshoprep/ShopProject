@@ -215,14 +215,27 @@ public class MainController {
 	}
 	
 	/*
-	 * 등록된 모든 회원 정보 조회
+	 * 등록된 모든 회원 정보 조회 및 검색
 	 */
 	@RequestMapping("/member-list.do")
-	public String selectAllMember(@RequestParam(name="pageNo",defaultValue="1") int pageNo, Model model) {
-		List<MemberDTO> list = memberService.selectMemberList(pageNo);
-		model.addAttribute("member",list);
+	public String selectAllMember(@RequestParam(name="pageNo",defaultValue="1") int pageNo,
+			String search, String type, Model model) {
+		List<MemberDTO> list = null;
+		int count = 0;
+		if(search == null || type == null || search.equals("") || type.equals("")) {
+			list = memberService.selectMemberList(pageNo);
+			model.addAttribute("member",list);
+			
+			count = memberService.selectMemberCount();
+		} else {
+			list = memberService.selectSearchMember(search, type, pageNo);
+			model.addAttribute("search", search);
+			model.addAttribute("type", type);
+			model.addAttribute("member",list);
+			
+			count = memberService.selectSearchMemberCount(search,type);
+		}
 		
-		int count = memberService.selectMemberCount();
 		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
 		model.addAttribute("paging",vo);
 		
@@ -230,21 +243,16 @@ public class MainController {
 	}
 	
 	/*
-	 * 회원 목록 검색
+	 * 회원 정보 엑셀 파일 출력
 	 */
-	@RequestMapping("/member-search.do")
-	public String selectSearchMember(String search, String type, Model model, HttpServletResponse response)
-			throws IOException {
-		int pageNo = 1;
-		List<MemberDTO> list = memberService.selectSearchMember(search, type, pageNo);
-		model.addAttribute("member", list);
-
-		int count = memberService.selectMemberCount();
-		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
-		model.addAttribute("paging", vo);
-
+	@RequestMapping("/member-list-excel.do")
+	public String createMemberExcel() {
+		
+		
+		
 		return "manager_member";
 	}
+	
 	
 	/*
 	 * 등록된 회원 주문 정보 및 상세 정보 조회
@@ -265,14 +273,28 @@ public class MainController {
 	}
 	
 	/*
-	 * 회원 주문 내역 검색
+	 * 회원 주문 내역 조회
 	 */
 	@RequestMapping("/member-order-list.do")
-	public String selectProductList(@RequestParam(name="pageNo",defaultValue="1") int pageNo, Model model) {
-		List<MemberDTO> list = memberService.selectMemberOrderList(pageNo);
-		model.addAttribute("product",list);
+	public String selectProductList(@RequestParam(name="pageNo",defaultValue="1") int pageNo,
+			String search, String type, Model model) {
+		List<MemberDTO> list = null;
+		int count = 0;
 		
-		int count = memberService.selectMemberOrderCount();
+		if(search == null || type == null || search.equals("") || type.equals("")) {
+			list = memberService.selectMemberOrderList(pageNo);
+			model.addAttribute("product",list);
+			
+			count = memberService.selectMemberOrderCount();
+		}else {
+			list = memberService.selectSearchMemberOrder(pageNo, search, type);
+			model.addAttribute("product",list);
+			model.addAttribute("search",search);
+			model.addAttribute("type",type);
+			
+			count = memberService.selectSearchMemberOrderCount(search,type);
+		}
+		
 		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
 		model.addAttribute("paging",vo);
 		
@@ -280,34 +302,20 @@ public class MainController {
 	}
 	
 	/*
-	 * 멤버 주문 목록 페이지 이동
+	 * 회원 주문 목록 검색
 	 */
-	@RequestMapping("/member-login-order.do")
-	public String selectLoginMemberOrderList(Model model, HttpSession session) {
-		int pageNo= 1;
-		String id = (String)session.getAttribute("id");
-		
-		List<HashMap<String, Object>> list = memberService.selectLoginMemberOrderList(pageNo, id);
-		model.addAttribute("product",list);
-		
-		int count = memberService.selectMemberOrderCount();
+	@RequestMapping("/member-product-search.do")
+	public String selectSearchMemberProduct(String search, String type, Model model, HttpServletResponse response)
+			throws IOException {
+		int pageNo = 1;
+		List<MemberDTO> list = memberService.selectSearchMemberProduct(search, type, pageNo);
+		model.addAttribute("member", list);
+
+		int count = memberService.selectMemberCount();
 		PagingVO vo = new PagingVO(count, pageNo, 15, 5);
-		model.addAttribute("paging",vo);
-		
-		return "member-order-list";
-	}
-	
-	/*
-	 * 상품 등록 페이지 이동 
-	 */
-	@RequestMapping("/manager-product-list.do")
-	public String manager_product_register(Model model) {
-		
-		List<ProductDTO> productlist = productservice.selectProductList();
-		System.out.println(productlist.toString());
-		model.addAttribute("productlist", productlist);
-		
-		return "manager_productList";
+		model.addAttribute("paging", vo);
+
+		return "manager_member_product";
 	}
 	
 	/*-----------------------------------------------박홍희----------------------------------------*/

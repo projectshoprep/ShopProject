@@ -12,6 +12,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+<
 
 <title>SB Admin 2 - Blank</title>
 
@@ -27,6 +28,17 @@
 
 <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+	<style type="text/css">
+		.before-arrow, .next-arrow{
+			width: 15px;
+		}
+		.paging_normal{
+			color : blue;
+			font-weight : bold;
+		}
+	</style>    
+    
 </head>
 
 <body id="page-top">
@@ -59,7 +71,7 @@
 					<!-- Topbar Search -->
 					<form
 						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-						action="member-search.do" method="get">
+						action="member-order-list.do" method="get">
 						<div class="input-group">
 						
 							<select class="search_select" name="type">
@@ -162,7 +174,7 @@
 	                               	<tr>
 										<td colspan="7" class="table_footer"><c:if
 												test="${requestScope.paging.previousPageGroup}">
-												<a href="/member-order-list.do?pageNo=${paging.startPageOfPageGroup - 1 }"> <img src="img/back-button.png" class="before-arrow"> </a>
+												<a href="/member-order-list.do?pageNo=${paging.startPageOfPageGroup - 1 }&search=${requestScope.search}&type=${requestScope.type}"> <img src="img/icon/back-button.png" class="before-arrow"> </a>
 											</c:if> <c:forEach var="m"
 												begin="${requestScope.paging.startPageOfPageGroup}"
 												end="${requestScope.paging.endPageOfPageGroup}">
@@ -171,11 +183,11 @@
 														<span class="paging_normal">${m }</span>
 													</c:when>
 													<c:otherwise>
-														<a href="/member-order-list.do?pageNo=${m }">${m }</a>
+														<a href="/member-order-list.do?pageNo=${m }&search=${requestScope.search}&type=${requestScope.type}">${m }</a>
 													</c:otherwise>
 												</c:choose>
 											</c:forEach> <c:if test="${requestScope.paging.nextPageGroup}">
-												<a href="/member-order-list.do?pageNo=${paging.endPageOfPageGroup + 1 }"> <img src="img/fast-forward.png" class="next-arrow"> </a>
+												<a href="/member-order-list.do?pageNo=${paging.endPageOfPageGroup + 1 }&search=${requestScope.search}&type=${requestScope.type}"> <img src="img/icon/fast-forward.png" class="next-arrow"> </a>
 											</c:if>
 										</td>
 									</tr>
