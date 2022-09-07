@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.ProductMapper">
+	
+	<!-- <select id="selectProductList" resultType="product">
+ 		SELECT P.PRODUCTNO,P.PRODUCTNAME,PC.CATEGORYNAME,PS.SIZEKIND,PCO.COLORNAME,P.COST,P.PRICE,P.INQUANTITY,P.PRODUCTSTOCK,P.RECEIVINGDATE 
+        FROM PRODUCT P ,PRODUCTCATEGORY PC, PRODUCTCOLOR PCO, PRODUCTSIZE PS
+        WHERE P.PRODUCTNO = PC.PRODUCTNO(+) AND P.PRODUCTNO = PCO.PRODUCTNO(+) AND P.PRODUCTNO = PS.PRODUCTNO
+ 	</select> -->
+	<select id="selectProductList" resultType="product">
+ 		select * from product
+ 	</select>
+	<select id="selectProductDTO" parameterType="String" resultType="product">
+ 		select * from PRODUCT where PRODUCTNO = ${productno}
+ 	</select>
+	<select id="selectFilePath" parameterType="String" resultType="file">
+ 		select * from PRODUCTPHOTO where PRODUCTNO = #{productno}
+ 	</select>
+ 	<select id="selectProductNO" resultType="String">
+ 		select product_no.nextval from dual
+ 	</select>
+ 	<select id="selectFile" parameterType="map" resultType="String">
+ 		select photopath from PRODUCTPHOTO where PRODUCTNO = #{productno} and PRODUCTPHOTONO = #{productphotono}
+ 	</select>
+ 	
+ 	<delete id="deleteProduct" parameterType="String">
+			DELETE FROM PRODUCT WHERE PRODUCTNO = #{INDEX}
+	</delete>
+	<!-- insertProduct -->
+	<insert id="insertProduct" parameterType="product">
+	insert into product(PRODUCTNO,PRODUCTNAME,RECEIVINGDATE,PRODUCTSTOCK,INQUANTITY,COST,PRICE,color,category,sizename) 
+	values(#{productno},#{productname},#{receivingdate},#{productstock},#{inquantity},#{cost},#{price},#{color},#{category},#{sizename}) 
+	</insert>
+	<insert id="insertFileList" parameterType="file">
+ 		insert into PRODUCTPHOTO(productno,productphotono,photopath)
+ 		values(#{productno},#{productphotono},#{photopath})
+ 	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
