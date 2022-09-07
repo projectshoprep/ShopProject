@@ -20,7 +20,7 @@
 <br>
 1 구현된 기능 <br>
  a. 유저 <br>
-  + 메인 메뉴·카트·프로필 template(.jsp) 파일로 대체
+  + 메인 메뉴·카트·프로필 template(.jsp) 파일로 대체<br>
   + qna 글쓰기(파일 첨부)<br>
 <br>
  b. 관리자 <br>
