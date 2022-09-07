@@ -98,7 +98,20 @@
 		where
 		${type} like '%' || #{search} || '%'
 	</select>
-	
+	<select id="selectMemberListExcel" resultType="member">
+		select memberId, memberName, address
+		,to_char(birthDate,'YYYY/MM/DD') as birthDate
+		,memberTelNo, gender, withdraw 
+		from member
+	</select>
+	<select id="selectSearchMemberExcel" parameterType="map" resultType="member">
+		select memberId, memberName, address
+		, to_char(birthDate,'YYYY/MM/DD') as birthDate
+		,memberTelNo, gender,withdraw 
+		from member
+		where
+		${type} like '%' || #{search} || '%'
+	</select>
 </mapper>
 
 

@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.app.MemberExcel;
 import com.project.dto.FileDTO;
 import com.project.dto.MemberDTO;
 import com.project.dto.ProductDTO;
@@ -238,13 +238,20 @@ public class MainController {
 	 * 회원 정보 엑셀 파일 출력
 	 */
 	@RequestMapping("/member-list-excel.do")
-	public String createMemberExcel() {
+	public String createMemberExcel(Model model, String search, String type) {
+		MemberExcel memberExcel = new MemberExcel();
 		
+		List<MemberDTO> list = null;
+		if(search == null || type == null || search.equals("") || type.equals("")) {
+			list = memberService.selectMemberListExcel();
+		} else {
+			list = memberService.selectSearchMemberExcel(search, type);
+		}
 		
+		memberExcel.memberExcelCreator(list);
 		
-		return "manager_member";
+		return "redirect:/member-list.do?search="+search+"&type="+type;
 	}
-	
 	
 	/*
 	 * 회원 주문 내역 조회

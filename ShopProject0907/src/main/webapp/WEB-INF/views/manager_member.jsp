@@ -150,16 +150,7 @@
 			                               		<td>${m.address }</td>
 			                               		<td>${m.birthDate }</td>
 			                               		<td>${m.memberTelNo }</td>
-			                               		<td>
-			                               			<c:choose>
-				                               			<c:when test="${m.withdraw == 1 }">
-				                               				Y
-				                               			</c:when>
-				                               			<c:otherwise>
-				                               				N
-				                               			</c:otherwise>
-				                               		</c:choose>
-			                               		</td>
+			                               		<td>${m.withdraw}</td>
 			                               		<td>${m.gender }</td>
 			                               		<td><a href="manager-member-detail?memberId=${m.memberId }">주문내역</a></td>
 		                               		</tr>   	  
@@ -185,11 +176,15 @@
 												<a href="/member-list.do?pageNo=${paging.endPageOfPageGroup + 1 }"> <img src="img/fast-forward.png" class="next-arrow"> </a>
 											</c:if>
 										</td>
+										<td>
+											<a href="member-list-excel.do?search=${requestScope.search}&type=${requestScope.type}">엑셀 파일 생성</a>
+										</td>
 									</tr>
 	                               </tfoot>
 							</table>
 						</div>
 					</div>
+				</div>
 				</div>
             <!-- End of Main Content -->
 

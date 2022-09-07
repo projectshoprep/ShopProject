@@ -32,5 +32,7 @@ public interface MemberMapper {
 	List<MemberDTO> selectSearchMemberProduct(Map<String, Object> map);
 	int selectSearchMemberCount(Map<String, Object> map);
 	int selectSearchMemberOrderCount(Map<String, Object> map);
+	List<MemberDTO> selectMemberListExcel();
+	List<MemberDTO> selectSearchMemberExcel(Map<String, Object> map);
 	
 }

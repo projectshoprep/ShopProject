@@ -101,12 +101,17 @@
 											<li><a href="cart.html">QNA</a></li>
 											<li><a href="cart.html">쿠폰함</a></li>
 											<li><a href="cart.html">1:1 채팅</a></li>
-											<li><a href="logout.do">Logout</a></li>
+											<li><a href="logout.do">Log out</a></li>
 										</ul>
 									</div>
 								</c:when>
 								<c:otherwise>
-									<a href="login-page.do">Login</a>
+									<div class="language_currency header_account_list ">
+										<a href="#"><span class="pe-7s-user"></span></a>
+										<ul class="dropdown_currency">
+											<li><a href="login-page.do">Log in</a></li>
+										</ul>
+									</div>
 								</c:otherwise>
 							</c:choose>
 						</div>

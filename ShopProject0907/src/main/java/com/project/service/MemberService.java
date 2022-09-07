@@ -159,6 +159,19 @@ public class MemberService {
 		return memberMapper.selectSearchMemberOrderCount(map);
 	}
 
+	public List<MemberDTO> selectMemberListExcel() {
+		return memberMapper.selectMemberListExcel();
+	}
+
+	public List<MemberDTO> selectSearchMemberExcel(String search, String type) {
+		Map <String, Object> map = new HashMap<>();
+		
+		map.put("search", search);
+		map.put("type", type);
+		
+		return memberMapper.selectSearchMemberExcel(map);
+	}
+
 	
 
 	
