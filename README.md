@@ -33,4 +33,4 @@
 <br>
 1. 기능 <br>
  a. 유저 <br>
-  + 메인 메뉴-shop-category(db에서 데이터 가져오게) <br>
+  + 메인 메뉴-shop-category 목록(db작업) <br>
