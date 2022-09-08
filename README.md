@@ -34,3 +34,4 @@
 1. 기능 <br>
  a. 유저 <br>
   + 메인 메뉴-shop-category 목록(db작업) <br>
+  + category-상품 페이지로 이동 <br>
