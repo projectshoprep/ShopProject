@@ -32,6 +32,7 @@
 
 <br>
 1. 기능 <br>
- a. 유저 <br>
+ - 박홍희, 심현성, 유선영 <br>
+  a.기능 <br>
   + 메인 메뉴-shop-category 목록(db작업) <br>
   + category-상품 페이지로 이동 <br>
