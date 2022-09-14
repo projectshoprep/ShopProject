@@ -1,0 +1,28 @@
+[테이블]
+productsize -> sizes
+-칼럼
+sizeno varchar2(200)
+sizekind varchar2(200)
+productno varchar2(200)
+
+[테이블]
+productcolor -> color
+-칼럼
+colorno varchar2(200)
+colorname varchar2(200)
+productno varchar2(200)
+
+[테이블]
+qna
+-칼럼
+qnano -> qno varchar2(200)
+memberid varchar2(200)
+qnacontent varchar2(200)
+title varchar2(200)
+
+[테이블-추가]
+qnareply
+-칼럼
+qno varchar2(200)
+qnarecontent varchar2(200)
+writer varchar2(200)

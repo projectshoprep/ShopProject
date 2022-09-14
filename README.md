@@ -33,5 +33,18 @@
 <br>
 1. 박홍희, 심현성, 유선영 <br>
  a. 기능 <br>
-  + 메인 메뉴-shop-category 목록(db작업) <br>
+  + 메인 메뉴-shop-category 목록(db) <br>
   + category-상품 페이지로 이동 <br>
+
+## 9.12(수)
+
+<br>
+1. 심현성<br>
+ a. 기능 <br>
+ + 메인 페이지-상품 목록(db) <br>
+ + 상품목록-상품바로가기(상품 자세히) 페이지(db) <br>
+<br>
+2. 김준걸
+ a. 기능 <br>
+ + qna 질문글 목록(db) <br>
+ + qna 질문글 자세히(qna에 대한 댓글 목록)(db) <br>
