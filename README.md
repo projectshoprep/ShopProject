@@ -1,8 +1,7 @@
 # ShopProject
-<br>
 ## 구현한 기능
 <br>
-<hr>
+<br>
  1. 심현성 <br>
   + 상품 카트에 등록 <br>
   + 상품 구매 <br>
